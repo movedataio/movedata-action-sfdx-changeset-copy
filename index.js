@@ -29,7 +29,7 @@ async function run() {
     console.log('fsReadResult', fsReadResult);
 
     // sfdx force auth jwt grant --client-id $SFDX_CLIENT_ID --jwt-key-file ./config/server.key --username $SFDX_USERNAME --alias $SFDX_ALIAS
-    const result = await sfdx.force.auth.jwt.grant({
+    const result = await sfdx.auth.jwt.grant({
       "client-id": clientId,
       "jwt-key-file": serverKeyFilepath,
       "username": username,
@@ -45,3 +45,4 @@ async function run() {
 }
 
 run();
+// console.log(sfdx.auth.jwt);
