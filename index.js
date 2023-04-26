@@ -44,6 +44,14 @@ async function run(request) {
     console.log(r3);
   });
 
+  await core.group('Retrieve ChangeSet from Salesforce', async () => {
+    const r4cmd = `sfdx force:mdapi:retrieve --targetusername ${SFDX_ALIAS} --packagenames ${changesetName} --wait 15 -retrievetargetdir ./src --unzip`;
+    console.log('#', r4cmd);
+    const r4 = await execCommand(r4cmd);
+    console.log(r4);
+  });
+
+
   return;
 
   /*
