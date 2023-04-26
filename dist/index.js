@@ -36676,7 +36676,7 @@ async function run() {
     const clientId = core.getInput('clientId');
     const username = core.getInput('username');
   
-    console.log(`Hello ${serverKey}!`);
+    console.log(`Hello ${serverKey === null}!`);
   
     // Get the JSON webhook payload for the event that triggered the workflow
     const payload = JSON.stringify(github.context.payload, undefined, 2)
