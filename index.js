@@ -1,8 +1,7 @@
-const child = require('child_process');
 const core = require('@actions/core');
+const child = require('child_process');
 const path = require('path');
 const fs = require('fs/promises');
-const sfdx = require('sfdx-node');
 
 const SFDX_ALIAS = 'targetEnvironment';
 
@@ -53,7 +52,7 @@ async function run(request) {
   });
 
   const destDir = request.folder || path.join(process.env.GITHUB_WORKSPACE, './src');
-  fs.moveSync(retrievetargetdir, destDir, { overwrite: true });
+  await fs.moveSync(retrievetargetdir, destDir, { overwrite: true });
   core.setOutput("folder", destDir);
 }
 
