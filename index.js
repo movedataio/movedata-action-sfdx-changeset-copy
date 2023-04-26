@@ -50,7 +50,7 @@ async function run(request) {
     const r4 = await execCommand(r4cmd);
     console.log(r4);
 
-    const r5cmd = `ls ${retrievetargetdir}`;
+    const r5cmd = `rm ${retrievetargetdir}/unpackaged.zip && ls -R ${retrievetargetdir}`;
     console.log('#', r5cmd);
     const r5 = await execCommand(r5cmd);
     console.log(r5);
