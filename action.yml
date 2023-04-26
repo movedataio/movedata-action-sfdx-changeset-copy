@@ -19,4 +19,4 @@ outputs:
     description: 'File where the data has been exported'
 runs:
   using: 'node16'
-  main: 'dist/index.js'
+  main: 'index.js'
