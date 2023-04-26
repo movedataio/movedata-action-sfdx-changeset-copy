@@ -56,7 +56,7 @@ async function run(request) {
     console.log(r5);
   });
 
-  const destDir = request.folder || path.join(process.env.GITHUB_WORKSPACE, './src');
+  const destDir = request.folder || path.join(process.env.GITHUB_WORKSPACE);
   await core.group('Copy Files to Target Folder', async () => {
     const r5cmd = `mkdir -p ${destDir}/ && cp -r ${retrievetargetdir}/ ${destDir}/`;
     console.log('#', r5cmd);
