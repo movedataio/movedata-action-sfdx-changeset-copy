@@ -16,8 +16,6 @@ inputs:
     default: 'MoveDataDev'
   folder:
     description: 'File to export the data'
-    required: true
-    default: './'
 outputs:
   folder:
     description: 'File where the data has been exported'

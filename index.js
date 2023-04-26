@@ -44,39 +44,17 @@ async function run(request) {
     console.log(r3);
   });
 
+  const retrievetargetdir = path.join(request.root || './', './src');
   await core.group('Retrieve Changeset from Salesforce', async () => {
-    const retrievetargetdir = path.join(request.root || './', './src');
     const r4cmd = `sfdx force:mdapi:retrieve --targetusername ${SFDX_ALIAS} --packagenames ${changesetName} --wait 15 --retrievetargetdir ${retrievetargetdir} --unzip`;
     console.log('#', r4cmd);
     const r4 = await execCommand(r4cmd);
     console.log(r4);
   });
 
-  return;
-
-  /*
-  // sfdx force auth jwt grant --client-id $SFDX_CLIENT_ID --jwt-key-file ./config/server.key --username $SFDX_USERNAME --alias $SFDX_ALIAS
-  const authResult = await sfdx.auth.jwt.grant({
-    "_quiet": false,
-    "clientid": clientId,
-    "jwtkeyfile": serverKeyFilepath,
-    "username": username,
-    "setalias": SFDX_ALIAS,
-  });
-  console.log('');
-  console.log('authResult', authResult);
-
-  // sfdx force:mdapi:retrieve -u {{Origin Org}} -p {{Change Set Name}} -w 10 -r .
-  const mdapiResult = await sfdx.force.mdapi.retrieve({
-    "targetusername": SFDX_ALIAS,
-    "packagenames": changesetName,
-    "retrievetargetdir": "./src",
-    "wait": 15,
-    "unzip": true,
-  });
-  console.log('');
-  console.log('mdapiResult', mdapiResult);
-  */
+  const destDir = request.folder || path.join(process.env.GITHUB_WORKSPACE, './src');
+  fs.moveSync(retrievetargetdir, destDir, { overwrite: true });
+  core.setOutput("folder", destDir);
 }
 
 async function runFromCommandLine() {
