@@ -1,9 +1,22 @@
+const child = require('child_process');
 const core = require('@actions/core');
 const path = require('path');
 const fs = require('fs/promises');
 const sfdx = require('sfdx-node');
 
 const SFDX_ALIAS = 'targetEnvironment';
+
+async function execCommand(cmd) {
+  return new Promise((resolve, reject) => {
+    child.exec(cmd, (error, stdout, stderr) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(stdout); 
+      }
+    });
+  });
+}
 
 async function run(request) {
   if (!request) throw new Error('Missing Request');
@@ -14,6 +27,20 @@ async function run(request) {
   if (!username) throw new Error('Missing Salesforce Username');
   if (!changesetName) throw new Error('Missing Salesforce Package or Changeset Name');
 
+  const r1 = await execCommand('npm install sfdx-cli --global');
+  console.log(r1);
+
+  const r2 = await execCommand('npm install @salesforce/cli --global');
+  console.log(r2);
+
+  const r3cmd = `sfdx force auth jwt grant --client-id ${clientId} --jwt-key-file ${serverKeyFilepath} --username ${username} --alias ${SFDX_ALIAS}`;
+  console.log(r3cmd);
+  const r3 = await execCommand(r3cmd);
+  console.log(r3);
+
+  return;
+
+  /*
   // sfdx force auth jwt grant --client-id $SFDX_CLIENT_ID --jwt-key-file ./config/server.key --username $SFDX_USERNAME --alias $SFDX_ALIAS
   const authResult = await sfdx.auth.jwt.grant({
     "_quiet": false,
@@ -35,6 +62,7 @@ async function run(request) {
   });
   console.log('');
   console.log('mdapiResult', mdapiResult);
+  */
 }
 
 async function runFromCommandLine() {
