@@ -27,17 +27,19 @@ async function run(request) {
   if (!username) throw new Error('Missing Salesforce Username');
   if (!changesetName) throw new Error('Missing Salesforce Package or Changeset Name');
 
-  core.group('Install Dependencies', async () => {
+  await core.group('Install SFDX Dependencies', async () => {
     const r1 = await execCommand('npm install sfdx-cli --global');
     console.log(r1);
-  
+  });  
+
+  await core.group('Install SF CLI Dependencies', async () => {
     const r2 = await execCommand('npm install @salesforce/cli --global');
     console.log(r2);
   });
 
-  core.group('Authorise with Salesforce', async () => {
+  await core.group('Authorise with Salesforce', async () => {
     const r3cmd = `sfdx force auth jwt grant --client-id ${clientId} --jwt-key-file ${serverKeyFilepath} --username ${username} --alias ${SFDX_ALIAS}`;
-    console.log(r3cmd);
+    console.log('#', r3cmd);
     const r3 = await execCommand(r3cmd);
     console.log(r3);
   });
