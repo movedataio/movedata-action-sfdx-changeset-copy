@@ -52,7 +52,13 @@ async function run(request) {
   });
 
   const destDir = request.folder || path.join(process.env.GITHUB_WORKSPACE, './src');
-  await fs.moveSync(retrievetargetdir, destDir, { overwrite: true });
+  await core.group('Copy Files to Target Folder', async () => {
+    const r5cmd = `cp -r ${retrievetargetdir} ${destDir}`;
+    console.log('#', r5cmd);
+    const r5 = await execCommand(r5cmd);
+    console.log(r5);
+  });
+
   core.setOutput("folder", destDir);
 }
 
