@@ -2,8 +2,9 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const path = require('path');
 const fs = require('fs/promises');
-
 const sfdx = require('sfdx-node');
+
+const SFDX_ALIAS = 'targetEnvironment';
 
 async function run() {
   try {
@@ -24,13 +25,18 @@ async function run() {
     const fsWriteResult = await fs.writeFile(serverKeyFilepath, serverKey);
     console.log('fsWriteResult', fsWriteResult);
 
-    /*
+    const fsReadResult = await fs.readFile(serverKeyFilepath, { encoding: 'utf8' });
+    console.log('fsReadResult', fsReadResult);
+
     // sfdx force auth jwt grant --client-id $SFDX_CLIENT_ID --jwt-key-file ./config/server.key --username $SFDX_USERNAME --alias $SFDX_ALIAS
-    const result = await sfdx.force.auth.jwt({
+    const result = await sfdx.force.auth.jwt.grant({
       "client-id": clientId,
-      "jwt-key-file": 
-    })
-    */
+      "jwt-key-file": serverKeyFilepath,
+      "username": username,
+      "alias": SFDX_ALIAS,
+    });
+
+    console.log('result', result);
 
   }
   catch (error) {
