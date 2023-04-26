@@ -44,13 +44,13 @@ async function run(request) {
     console.log(r3);
   });
 
-  await core.group('Retrieve ChangeSet from Salesforce', async () => {
-    const r4cmd = `sfdx force:mdapi:retrieve --targetusername ${SFDX_ALIAS} --packagenames ${changesetName} --wait 15 -retrievetargetdir ./src --unzip`;
+  await core.group('Retrieve Changeset from Salesforce', async () => {
+    const retrievetargetdir = path.join(request.root || './', './src');
+    const r4cmd = `sfdx force:mdapi:retrieve --targetusername ${SFDX_ALIAS} --packagenames ${changesetName} --wait 15 --retrievetargetdir ${retrievetargetdir} --unzip`;
     console.log('#', r4cmd);
     const r4 = await execCommand(r4cmd);
     console.log(r4);
   });
-
 
   return;
 
@@ -81,7 +81,7 @@ async function run(request) {
 
 async function runFromCommandLine() {
   const config = JSON.parse(await fs.readFile('./config/details.json'));
-  const request = Object.assign({}, { serverKeyFilepath: './config/server.key' }, config);
+  const request = Object.assign({}, { root: './', serverKeyFilepath: './config/server.key' }, config);
 
   return await run(request);
 }
@@ -106,6 +106,7 @@ async function runFromGithub() {
       clientId,
       username,
       changesetName,
+      root: process.env['RUNNER_TEMP'],
     };
 
     return await run(request);
