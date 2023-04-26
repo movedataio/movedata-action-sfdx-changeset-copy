@@ -18,5 +18,15 @@ outputs:
   folder:
     description: 'File where the data has been exported'
 runs:
+  - name: Setup Node.js
+    uses: actions/setup-node@v2
+    with:
+      node-version: '16'
+  - name: Cache dependencies
+    uses: actions/cache@v2
+    with:
+      path: ~/.npm
+      key: npm-${{ hashFiles('package-lock.json') }}
+      restore-keys: npm-
   using: 'node16'
-  main: 'dist/index.js'
+  main: 'index.js'
