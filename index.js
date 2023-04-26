@@ -9,6 +9,10 @@ async function run() {
     const clientId = core.getInput('clientId');
     const username = core.getInput('username');
   
+    if (!serverKey) throw new Error('Missing Connected App Certificate');
+    if (!clientId) throw new Error('Missing Connected App Client ID');
+    if (!username) throw new Error('Missing Salesforce Username');
+
     console.log(`Hello ${serverKey === null} ${serverKey === undefined} ${!serverKey}!`);
   
     // Get the JSON webhook payload for the event that triggered the workflow
