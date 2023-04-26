@@ -22,7 +22,8 @@ async function run(request) {
     "username": username,
     "setalias": SFDX_ALIAS,
   });
-  console.log('authResult', authResult);
+  console.log('');
+  //console.log('authResult', authResult);
 
   // sfdx force:mdapi:retrieve -u {{Origin Org}} -p {{Change Set Name}} -w 10 -r .
   const mdapiResult = await sfdx.force.mdapi.retrieve({
@@ -33,7 +34,8 @@ async function run(request) {
     "wait": 15,
     "unzip": true,
   });
-  console.log('mdapiResult', mdapiResult);
+  console.log('');
+  //console.log('mdapiResult', mdapiResult);
 }
 
 async function runFromCommandLine() {
@@ -72,5 +74,9 @@ async function runFromGithub() {
   }
 }
 
-// runFromCommandLine();
-runFromGithub();
+if (process.env.CI === 'true') {
+  runFromGithub();
+}
+else {
+  runFromCommandLine();
+}
