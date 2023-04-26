@@ -7,7 +7,7 @@ const SFDX_ALIAS = 'targetEnvironment';
 
 async function execCommand(cmd) {
   return new Promise((resolve, reject) => {
-    child.exec(cmd, (error, stdout, stderr) => {
+    child.exec(cmd, (error, stdout) => {
       if (error) {
         reject(error);
       } else {
@@ -49,14 +49,24 @@ async function run(request) {
     console.log('#', r4cmd);
     const r4 = await execCommand(r4cmd);
     console.log(r4);
+
+    const r5cmd = `ls ${retrievetargetdir}`;
+    console.log('#', r5cmd);
+    const r5 = await execCommand(r5cmd);
+    console.log(r5);
   });
 
   const destDir = request.folder || path.join(process.env.GITHUB_WORKSPACE, './src');
   await core.group('Copy Files to Target Folder', async () => {
-    const r5cmd = `cp -r ${retrievetargetdir} ${destDir}`;
+    const r5cmd = `mkdir -p ${destDir}/ && cp -r ${retrievetargetdir}/ ${destDir}/`;
     console.log('#', r5cmd);
     const r5 = await execCommand(r5cmd);
     console.log(r5);
+
+    const r5cmdA = `ls ${destDir}/`;
+    console.log('#', r5cmdA);
+    const r5A = await execCommand(r5cmdA);
+    console.log(r5A);
   });
 
   core.setOutput("folder", destDir);
