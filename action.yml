@@ -10,6 +10,10 @@ inputs:
   username:
     description: 'Salesforce Username'
     required: true
+  changesetName:
+    description: 'Package or Changeset Name'
+    required: true
+    default: 'MoveDataDev'
   folder:
     description: 'File to export the data'
     required: true

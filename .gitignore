@@ -1,3 +1,6 @@
+src
+config
+
 # Editors
 .vscode/
 .idea/
