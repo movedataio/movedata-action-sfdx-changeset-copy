@@ -23,11 +23,10 @@ async function run(request) {
     "setalias": SFDX_ALIAS,
   });
   console.log('');
-  //console.log('authResult', authResult);
+  console.log('authResult', authResult);
 
   // sfdx force:mdapi:retrieve -u {{Origin Org}} -p {{Change Set Name}} -w 10 -r .
   const mdapiResult = await sfdx.force.mdapi.retrieve({
-    "_quiet": false,
     "targetusername": SFDX_ALIAS,
     "packagenames": changesetName,
     "retrievetargetdir": "./src",
@@ -35,7 +34,7 @@ async function run(request) {
     "unzip": true,
   });
   console.log('');
-  //console.log('mdapiResult', mdapiResult);
+  console.log('mdapiResult', mdapiResult);
 }
 
 async function runFromCommandLine() {
@@ -75,8 +74,10 @@ async function runFromGithub() {
 }
 
 if (process.env.CI === 'true') {
+  console.log('Detected CI:', true);
   runFromGithub();
 }
 else {
+  console.log('Detected CI:', false);
   runFromCommandLine();
 }
