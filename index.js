@@ -38,6 +38,18 @@ async function run() {
 
     console.log('result', result);
 
+    const result1 = await sfdx.force.org.status({
+      "alias": SFDX_ALIAS,
+    });
+
+    console.log('result1', result1);
+
+    const result2 = sfdx.force.org.status({
+      "alias": SFDX_ALIAS,
+    });
+
+    console.log('result2', result2);
+
   }
   catch (error) {
     core.setFailed(error.message);
