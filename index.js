@@ -31,24 +31,24 @@ async function run() {
     // sfdx force auth jwt grant --client-id $SFDX_CLIENT_ID --jwt-key-file ./config/server.key --username $SFDX_USERNAME --alias $SFDX_ALIAS
     const result = await sfdx.auth.jwt.grant({
       "_quiet": false,
-      "client-id": clientId,
-      "jwt-key-file": serverKeyFilepath,
+      "clientid": clientId,
+      "jwtkeyfile": serverKeyFilepath,
       "username": username,
-      "alias": SFDX_ALIAS,
+      "setalias": SFDX_ALIAS,
     });
 
     console.log('result', result);
 
     const result1 = await sfdx.force.org.status({
       "_quiet": false,
-      "alias": SFDX_ALIAS,
+      "setalias": SFDX_ALIAS,
     });
 
     console.log('result1', result1);
 
     const result2 = sfdx.force.org.status({
       "_quiet": false,
-      "alias": SFDX_ALIAS,
+      "setalias": SFDX_ALIAS,
     });
 
     console.log('result2', result2);
