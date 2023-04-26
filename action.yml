@@ -1,13 +1,22 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'Export Salesforce Changeset'
+description: 'Copies the contents of a Salesforce Changeset.'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
+  serverKey:
+    description: 'Connected App Digital Certificate'
     required: true
-    default: '1000'
+  clientId:
+    description: 'Connected App Client Id'
+    required: true
+  username:
+    description: 'Salesforce Username'
+    required: true
+  folder:
+    description: 'File to export the data'
+    required: true
+    default: './'
 outputs:
-  time: # output will be available to future steps
-    description: 'The current time after waiting'
+  folder:
+    description: 'File where the data has been exported'
 runs:
   using: 'node16'
   main: 'dist/index.js'
